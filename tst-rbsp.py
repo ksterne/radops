@@ -1,3 +1,7 @@
+#This script reads off the Dst Kyoto index from the website and makes a decision
+#about whether or not the triggered mode needs to be written to the special
+#schedule file.
+
 import urllib
 from HTMLParser import HTMLParser
 import string
@@ -24,7 +28,7 @@ class MyHTMLParser(HTMLParser):
         if data.strip()==' ^^^^^ E yyyymm_part2.html ^^^^^ '.strip():
           self.active=True
         else:
-	  if self.active==True:
+    	  if self.active==True:
 	    pass 
           self.active=False 
     def handle_data(self, data):
@@ -111,6 +115,9 @@ for radar in radars:
     else:
       print "Tailing Event trigger"
       write_entry=False
+      #Added Dst_active line to correct logic.  As soon as the Dst_end_threshold has
+      #been crossed on the up-swing, the triggered mode should end.
+      Dst_active=False
       if(entry_endtime < current_time):
         print "Event trigger has expired"
         Dst_active=False
