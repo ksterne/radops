@@ -5,10 +5,12 @@
 import urllib
 from HTMLParser import HTMLParser
 import string
+from datetime import timedelta
 import datetime
 import os
 import time
 import ftplib
+
 command={}
 default_priority=15
 max_duration=360
@@ -60,14 +62,20 @@ for line in lines[7:]:
     except ValueError:
       dy=0
     if dy==reference_time.day:
-        hour=reference_time.hour+1
-        offset=-1;
-        if hour>8:
-          offset=offset+1
-        if hour>16:
-          offset=offset+1 
- 
-        ref_Dst=line[offset+hour*4:4+offset+hour*4]    
+	# Updated way to find the hour from BAS engineer
+        time=datetime.datetime.utcnow() - timedelta(minutes=30)
+        hour=time.hour
+	hour_offset= (hour*4) + divmod(hour,8)[0] + 3
+	
+#        hour=reference_time.hour+1
+#        offset=-1;
+#        if hour>8:
+#          offset=offset+1
+#        if hour>16:
+#          offset=offset+1 
+	# Update from BAS engineer 
+ 	ref_Dst=line[hour_offset:hour_offset+4]
+ #        ref_Dst=line[offset+hour*4:4+offset+hour*4]    
         ref_Dst=int(ref_Dst)
 #      print "Reference Dst Hour: %d Val: %d" % (hour,ref_Dst) 
         print "Day: %d Hour: %d  Dst value: %lf" % (dy,hour,ref_Dst)
