@@ -34,8 +34,7 @@ args=parser.parse_args()
 #Reset draft and prerelease args to lower case for json consumption
 args.draft="{0}".format(args.draft).lower()
 args.prerelease="{0}".format(args.prerelease).lower()
-print args
-sys,exit(0)
+
 # Setup Path 
 if args.path is None:
   args.path=xdg.BaseDirectory.save_config_path("github_release_script")
