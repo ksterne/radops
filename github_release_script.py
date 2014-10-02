@@ -4,6 +4,7 @@ from requests.auth import HTTPBasicAuth
 from types import *
 import argparse
 import os.path
+import emailnote
 from configobj import ConfigObj
 
 # You will need to get the access token from github for authorization to use the API to post
@@ -106,9 +107,15 @@ if abort_generation:
 else: 
   if args.run:
     payload = API_JSON
+    # Grab out the info to send in an e-mail
+    author = json.dumps(last_item["commit"]["committer"], sort_keys=True, indent=4, separators=(',', ': '))
+    emessage = "\n\nNew commit by:\n\n"+str(author)+"\n\nMessage:\n\n"+str(last_item["commit"]["message"])+"\n\nLink to the changes:\n\n"+str(last_item["html_url"])
     url = 'https://api.github.com/repos/{0:s}/{1:s}/releases'.format(args.owner,args.repo)
     resp = requests.post(url=url, data=payload,auth=HTTPBasicAuth(access_token, "x-oauth-basic"))
+    # Send out an e-mail to the DDWG listserv.  Note this calls external file
+    mail = emailnote.emailNote(emessage, "New hdw.dat Release", "blorgon@yahoo.com", 'inspector@spacetime.com')
     assert resp.status_code == requests.codes.created,\
       "Post request to: {0:s} failed with Http response status: {1:d}".format(url,resp.status_code)
   else:
     if not args.quiet: print "Notice: script dryrun only. No release will be generated. Must use cmdline option --run to create release on github"
+
