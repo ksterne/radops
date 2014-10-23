@@ -37,13 +37,7 @@ def acfd_find_loop(sDate,radar):
 	#for key in myData.prm.__dict__.keys():
 	#	print 'myData.rawacf.'+key
 
-	try: l = open("log.txt", 'w')
-	except Exception, e:
-		print e
-		print "problem opening the file %s" % yrmnrad
-		sys.exit(-1)
-
-	print "Searching through files for missing acfd arrays..."
+		print "Searching through files for missing acfd arrays..."
 	while (myData != None):
 		try: array=myData.rawacf.acfd[0]
 		except IndexError:
