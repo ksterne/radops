@@ -9,7 +9,7 @@ import datetime as dt
 import datetime
 
 #Defining radars I've already done. So we can skip these ones
-completes = [ 'gbr', 'hal', 'kap', 'sas', 'pgr', 'kod', 'sto', 'pyk', 'han', 'ker', 'sye', 'sys', 'tig', 'san', 'ksr', 'mcm', 'sps', 'zho', 'unw', 'wal' ]
+completes = [ 'san' ]
 
 def acfd_find_loop(sDate,radar):
 	missing=0
