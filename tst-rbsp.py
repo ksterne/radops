@@ -65,6 +65,8 @@ for line in lines[7:]:
 	# Updated way to find the hour from BAS engineer
         time=datetime.datetime.utcnow() - timedelta(minutes=30)
         hour=time.hour
+        # Select dst value along line, complicated since ever 8 hours an extra space is added.
+        # 3 additional spaces offset from the day character spaces at the beginning of the line.
 	hour_offset= (hour*4) + divmod(hour,8)[0] + 3
 	
 #        hour=reference_time.hour+1
