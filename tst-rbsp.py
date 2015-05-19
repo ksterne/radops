@@ -40,7 +40,7 @@ class MyHTMLParser(HTMLParser):
 current_time=datetime.datetime.utcnow()
 print "Current Time:", current_time
 entry_endtime=current_time-datetime.timedelta(days=1)
-reference_time=current_time-datetime.timedelta(seconds=60*60*ref_hours)
+reference_time=current_time-datetime.timedelta(seconds=60*30*ref_hours)
 timestr="%04d%02d" % (reference_time.year,reference_time.month)
 
 print "Dst onset threshold: %lf" % (Dst_onset_threshold)
